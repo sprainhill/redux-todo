@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { reducer } from "./reducers/index";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 // Components
 import App from "./App";
@@ -15,7 +16,7 @@ import "./index.css";
 // `createStore` receives the reducer responsible for updating
 // the store we are creating and any initial state
 
-const store = createStore(reducer);
+const store = createStore(reducer, composeWithDevTools());
 
 // store lives on the provider component. We wrap our
 // App component inside Provider to give all our components

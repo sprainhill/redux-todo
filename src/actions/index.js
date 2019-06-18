@@ -1,44 +1,28 @@
 // Action types
 export const ADD_TODO = "ADD_TODO";
-// export const TOGGLE_TODO = "TOGGLE_TODO";
-// export const SET_VISIBILITY_FILTER = "SET_VISIBILITY_FILTER";
-
-// Constants
-
-// export const VisibilityFilters = {
-//   SHOW_ALL: "SHOW_ALL",
-//   SHOW_COMPLETED: "SHOW_COMPLETED",
-//   SHOW_ACTIVE: "SHOW_ACTIVE"
-// };
-
-// Tutorial
-// Action Creators
-
-// export const addTodo = text => {
-//   return {
-//     type: ADD_TODO,
-//     text: text
-//   };
-// };
-
-// export const toggleTodo = index => {
-//   return {
-//     type: TOGGLE_TODO,
-//     index: index
-//   };
-// };
-
-// export const setVisibilityFilter = filter => {
-//   return {
-//     type: SET_VISIBILITY_FILTER,
-//     filter: filter
-//   };
-// };
+export const TOGGLE_TODO = "TOGGLE_TODO";
+export const CLEAR_TODO = "CLEAR_TODO";
 
 export const addTodo = todo => {
   console.log("AddTodo todo", todo);
   return {
     type: ADD_TODO,
     payload: todo
+  };
+};
+
+export const toggleTodo = index => {
+  console.log("toggleTodo index", index);
+  return {
+    type: TOGGLE_TODO,
+    payload: index
+  };
+};
+
+export const clearTodo = event => {
+  console.log("clearTodo event", event);
+  event.preventDefault();
+  return {
+    type: CLEAR_TODO
   };
 };

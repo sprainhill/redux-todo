@@ -1,85 +1,17 @@
-import { ADD_TODO } from "../actions/index";
-// import {
-//   ADD_TODO,
-//   TOGGLE_TODO,
-//   SET_VISIBILITY_FILTER,
-//   VisibilityFilters
-// } from "../actions";
+import { ADD_TODO, TOGGLE_TODO, CLEAR_TODO } from "../actions/index";
 
-// Todo tutorial
-
-// const initialState = {
-//   visibilityFilter: VisibilityFilters.SHOW_ALL,
-//   todos: []
-// };
-
-// function todos(state = [], action) {
-//   switch (action.type) {
-//     case ADD_TODO:
-//       return [
-//         ...state,
-//         {
-//           text: action.text,
-//           completed: false
-//         }
-//       ];
-//     case TOGGLE_TODO:
-//       return state.map((todo, index) => {
-//         if (index === action.index) {
-//           return {
-//             ...todo,
-//             completed: !todo.completed
-//           };
-//         }
-//         return todo;
-//       });
-//     default:
-//       return state;
-//   }
-// }
-
-// function todoApp(state = initialState, action) {
-//   switch (action.type) {
-//     case SET_VISIBILITY_FILTER:
-//       return {
-//         ...state,
-//         visibilityFilter: action.filter
-//       };
-//     case ADD_TODO:
-//       return {
-//         ...state,
-//         todos: [
-//           ...state.todos,
-//           {
-//             text: action.text,
-//             completed: false
-//           }
-//         ]
-//       };
-//     case TOGGLE_TODO:
-//       return {
-//         ...state,
-//         todos: state.todos.map((todo, index) => {
-//           if (index === action.index) {
-//             return {
-//               ...todo,
-//               completed: !todo.completed
-//             };
-//           }
-//           return todo;
-//         })
-//       };
-//     default:
-//       return state;
-//   }
-// }
-
-// This reducer will handle our one action case of adding a todo.
+// This reducer will handle our two action cases of adding a todo, and toggling that todo complete on a click.
 // It will receive the state of our redux store, and an
-// action object created by our action creator.
+// action object created by our action creator depending on the input from the user.
 
 const initialState = {
-  todos: [{ todo: "Learn Redux" }]
+  todos: [
+    {
+      todo: "Learn Redux",
+      completed: false,
+      id: 1
+    }
+  ]
 };
 
 export const reducer = (state = initialState, action) => {
@@ -87,37 +19,34 @@ export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO:
       console.log("ADD_TODO action.payload", action.payload);
+      const newTodo = {
+        todo: action.payload,
+        completed: false,
+        id: state.todos[state.todos.length - 1].id + 1
+      };
       return {
         ...state,
-        todos: [...state.todos, action.payload]
+        todos: [...state.todos, newTodo]
       };
-    // break;
+    case TOGGLE_TODO:
+      return {
+        ...state,
+        todos: state.todos.map(todo => {
+          if (action.payload === todo.id) {
+            return {
+              ...todo,
+              completed: !todo.completed
+            };
+          } else {
+            return todo;
+          }
+        })
+      };
+    case CLEAR_TODO:
+      return {
+        todos: state.todos.filter(todo => !todo.completed)
+      };
     default:
       return state;
   }
 };
-
-// import { combineReducers } from "redux";
-
-// const rootReducer = combineReducers({
-//   todos: TodosReducer,
-//   activeTodo: ActiveTodo
-// });
-
-// export default rootReducer;
-
-// Sample state
-
-// const sampleState = {
-//   visibilityFilter: "SHOW_ALL",
-//   todos: [
-//     {
-//       text: "Do Redux Todo tutorial",
-//       completed: true
-//     },
-//     {
-//       text: "Keep all state in a single tree",
-//       completed: false
-//     }
-//   ]
-// };
